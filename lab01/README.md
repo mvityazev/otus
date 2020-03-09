@@ -23,26 +23,35 @@
 
 #### 1. Настройка VTP
 Настраиваем S2:
+```
 vtp domain CCNA
 vtp mode server
 vtp password cisco
+```
 
 Настраиваем S1 и S3:
+```
 vtp domain CCNA
 vtp mode client
 vtp password cisco
+```
 
 #### 2. Настройка DTP
 Настраиваем S1:
+```
 interface e0/1
 switchport mode dynamic desirable
+```
 
 Настраиваем S1 и S3:
+```
 interface e0/3
 switchport mode trunk
+```
 
 #### 3. Добавление VLAN
 На S2:
+```
 vlan 10
 name Red
 Svlan 20
@@ -52,32 +61,45 @@ name vlan 30
 name Yellow 
 vlan 99
 name Management
+```
 
 Настройка S1:
+```
 interface e0/2
 switchport mode access
 switchport access vlan 10
 interface vlan 99
 ip address 192.168.99.1 255.255.255.0
 no shutdown
+```
 
 Настройка S2:
+```
 interface e0/2
 switchport mode access
 switchport access vlan 20
 interface vlan 99
 ip address 192.168.99.2 255.255.255.0
 no shutdown
+```
 
 Настройка S3:
+```
 interface e0/2
 switchport mode access
 switchport access vlan 10
 interface vlan 99
 ip address 192.168.99.3 255.255.255.0
 no shutdown
+```
 
 #### 4. Настройка расширенной сети VLAN
 Настройка S1:
+```
 vtp mode transparent
 vlan 2000
+```
+
+
+###  Итоговая графическая схема
+![](eve.png)
