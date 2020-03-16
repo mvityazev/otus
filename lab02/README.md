@@ -19,3 +19,25 @@
 ### Выполнение
 
 #### 1. Создание сети и настройка основных параметров устройства
+Выполняем базовую настройку на коммутаторах
+```
+conf t
+hostname SX
+enable secret class
+line console 0
+password cisco
+login
+exec-timeout 0 0
+line vty 0 4
+password cisco
+exit
+
+interface vlan 1
+ip address 192.168.1.X 255.255.255.0
+no shutdown
+exit
+
+
+service password-encryption
+banner motd $ Authorized Access Only! $
+```
