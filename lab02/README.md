@@ -56,3 +56,5 @@ Sending 5, 100-byte ICMP Echos to 192.168.1.1, timeout is 2 seconds:
 Success rate is 80 percent (4/5), round-trip min/avg/max = 1/1/1 ms
 
 ```
+
+#### 2. Выбор корневого моста
