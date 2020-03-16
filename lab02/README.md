@@ -23,6 +23,7 @@
 ```
 conf t
 hostname SX
+no ip domain-lookup
 enable secret class
 line console 0
 password cisco
