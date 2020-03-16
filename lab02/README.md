@@ -26,7 +26,6 @@ hostname SX
 enable secret class
 line console 0
 password cisco
-login
 exec-timeout 0 0
 line vty 0 4
 password cisco
@@ -40,4 +39,19 @@ exit
 
 service password-encryption
 banner motd $ Authorized Access Only! $
+```
+
+Проверяем сетевую доступность между коммутаторами
+```
+S2#ping 192.168.1.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.3, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 1/1/1 ms
+S2#ping 192.168.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.1, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 1/1/1 ms
+
 ```
