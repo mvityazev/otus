@@ -148,6 +148,126 @@ Et0/3               Root FWD 100       128.4    Shr
 
 Корневые порты: S2 - Et0/1; S3 - Et0/3.
 Назначенные порты: S1 - Et0/1, Et0/3; S2 - Et0/3.
-Альтернативные порты: S3 - Et0/1.
+Альтернативные порты: S3 - Et0/1. Данный порт выбран, т.к. у него самая высокая метрика (путь к корневому коммутатору проходит через S2).
 
 #### 3. Наблюдение за процессом выбора протоколом STP порта, исходя из стоимости портов
+На S3 меняем стоимость порта:
+```
+interface e0/3
+spanning-tree cost 18
+```
+
+В результате блокируемый порт стал Et0/3 на S2
+```
+S3(config)#do show spanning-tree 
+
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     aabb.cc00.1000
+             Cost        18
+             Port        4 (Ethernet0/3)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  15  sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/1               Desg LIS 100       128.2    Shr 
+Et0/3               Root FWD 18        128.4    Shr 
+```
+
+```
+S2#show spanning-tree 
+
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     aabb.cc00.1000
+             Cost        100
+             Port        2 (Ethernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.2000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/1               Root FWD 100       128.2    Shr 
+Et0/3               Altn BLK 100       128.4    Shr 
+```
+
+Удаляем изменение стоимости порта на S3:
+```
+interface e0/3
+no spanning-tree cost 18
+```
+
+Блокируемый порт вновь стал Et0/1 на S3.
+
+#### 4. Наблюдение за процессом выбора протоколом STP порта, исходя из приоритета портов
+Активируем избыточные пути на всех коммутаторах
+```
+interface ethernet 0/0
+no shutdown
+exit
+interface ethernet 0/2
+no shutdown
+exit
+```
+
+Корневым портом на S2 стал Et0/0 (наименьший из возможных Et0/0 и Et0/1):
+```
+S2(config)#do show spanning-tree 
+
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     aabb.cc00.1000
+             Cost        100
+             Port        1 (Ethernet0/0)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.2000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/0               Root FWD 100       128.1    Shr 
+Et0/1               Altn BLK 100       128.2    Shr 
+Et0/2               Desg FWD 100       128.3    Shr 
+Et0/3               Desg FWD 100       128.4    Shr 
+```
+
+
+Корневым портом на S3 стал Et0/2 (наименьший из возможных Et0/2 и Et0/3):
+```
+S3(config)#do show spanning-tree 
+
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     aabb.cc00.1000
+             Cost        100
+             Port        3 (Ethernet0/2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/0               Altn BLK 100       128.1    Shr 
+Et0/1               Altn BLK 100       128.2    Shr 
+Et0/2               Root FWD 100       128.3    Shr 
+Et0/3               Altn BLK 100       128.4    Shr 
+```
