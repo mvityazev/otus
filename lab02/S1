@@ -1,9 +1,9 @@
 S1#sh running-config 
 Building configuration...
 
-Current configuration : 1214 bytes
+Current configuration : 1246 bytes
 !
-! Last configuration change at 19:45:29 MSK Thu Mar 19 2020
+! Last configuration change at 20:10:03 MSK Thu Mar 19 2020
 !
 version 15.2
 service timestamps debug datetime msec
@@ -90,9 +90,11 @@ line con 0
  logging synchronous
  login
 line aux 0
+ password 7 1511021F0725
+ login
 line vty 0 4
  password 7 121A0C041104
- login    
+ login
 !
 !
 end
