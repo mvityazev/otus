@@ -27,9 +27,12 @@ no ip domain-lookup
 enable secret class
 line console 0
 password cisco
+login
 exec-timeout 0 0
+exit
 line vty 0 4
 password cisco
+login
 exit
 
 interface vlan 1
