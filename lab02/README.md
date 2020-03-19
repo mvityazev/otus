@@ -30,6 +30,10 @@ password cisco
 login
 exec-timeout 0 0
 exit
+line aux 0
+password cisco
+login
+exit
 line vty 0 4
 password cisco
 login
