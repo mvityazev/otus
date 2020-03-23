@@ -44,13 +44,14 @@ exit
 service password-encryption
 banner motd $ Authorized Access Only! $
 
-interface vlan 99
+vlan 99
 name Managment
+interface vlan 99
 ip address 192.168.99.1X 255.255.255.0
 no shutdown
 exit
 
-interface vlan 10
+vlan 10
 name Staff
 exit
 
