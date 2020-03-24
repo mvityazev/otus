@@ -246,7 +246,7 @@ Group  Port-channel  Protocol    Ports
 3      Po3(SU)         LACP      Et0/0(P)    Et0/1(P) 
 ```
 
-Проверяем сетевую взаимодействие между PC:
+Проверяем сетевое взаимодействие между PC:
 ```
 VPCS> ping 192.168.10.1
 
