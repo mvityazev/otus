@@ -245,3 +245,34 @@ Group  Port-channel  Protocol    Ports
 1      Po1(SU)         PAgP      Et0/2(P)    Et0/3(P)    
 3      Po3(SU)         LACP      Et0/0(P)    Et0/1(P) 
 ```
+
+Проверяем сетевую взаимодействие между PC:
+```
+VPCS> ping 192.168.10.1
+
+84 bytes from 192.168.10.1 icmp_seq=1 ttl=64 time=0.259 ms
+84 bytes from 192.168.10.1 icmp_seq=2 ttl=64 time=0.301 ms
+84 bytes from 192.168.10.1 icmp_seq=3 ttl=64 time=0.465 ms
+84 bytes from 192.168.10.1 icmp_seq=4 ttl=64 time=0.390 ms
+^C
+VPCS> ping 192.168.10.3
+
+84 bytes from 192.168.10.3 icmp_seq=1 ttl=64 time=0.349 ms
+84 bytes from 192.168.10.3 icmp_seq=2 ttl=64 time=0.467 ms
+84 bytes from 192.168.10.3 icmp_seq=3 ttl=64 time=0.489 ms
+84 bytes from 192.168.10.3 icmp_seq=4 ttl=64 time=0.545 ms
+```
+
+Проверяем сетевое взаимодействие между коммутаторами:
+```
+S2#ping 192.168.99.11
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.99.11, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 1/1/1 ms
+S2#ping 192.168.99.13
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.99.13, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 1/1/1 ms
+```
