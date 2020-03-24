@@ -1,9 +1,9 @@
-S1#sh run
+S1#sh running-config 
 Building configuration...
 
-Current configuration : 1964 bytes
+Current configuration : 1920 bytes
 !
-! Last configuration change at 22:38:44 MSK Tue Mar 24 2020
+! Last configuration change at 22:57:43 MSK Tue Mar 24 2020
 !
 version 15.2
 service timestamps debug datetime msec
@@ -96,10 +96,6 @@ interface Ethernet1/2
  shutdown
 !
 interface Ethernet1/3
- shutdown
-!
-interface Vlan10
- no ip address
  shutdown
 !
 interface Vlan99
