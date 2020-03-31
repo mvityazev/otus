@@ -74,3 +74,26 @@ int serial1/1
 ip address 10.2.2.1 255.255.255.252
 no sh
 ```
+
+
+Настраиваем интерфейсы на коммутаторах:
+
+--- S1 ----
+```
+vlan 1
+interface vlan 1
+ip address 192.168.1.11 255.255.255.0
+no shutdown
+exit
+ip default-gateway 192.168.1.1
+```
+
+--- S3 ----
+```
+vlan 1
+interface vlan 1
+ip address 192.168.1.13 255.255.255.0
+no shutdown
+exit
+ip default-gateway 192.168.1.3
+```
