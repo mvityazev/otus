@@ -207,3 +207,36 @@ L        192.168.1.3/32 is directly connected, Ethernet0/0
 ```
 
 ### 2. Настройка обеспечения избыточности на первом хопе с помощью HSRP
+Выполняем трассировку и ping запрос с PC-A:
+```
+PC-A> trace 209.165.200.225
+trace to 209.165.200.225, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   0.228 ms  0.210 ms  0.216 ms
+ 2   *10.1.1.2   8.565 ms (ICMP type:3, code:3, Destination port unreachable)  *
+
+PC-A> ping 209.165.200.225
+
+84 bytes from 209.165.200.225 icmp_seq=1 ttl=254 time=8.651 ms
+84 bytes from 209.165.200.225 icmp_seq=2 ttl=254 time=8.649 ms
+84 bytes from 209.165.200.225 icmp_seq=3 ttl=254 time=8.668 ms
+84 bytes from 209.165.200.225 icmp_seq=4 ttl=254 time=8.699 ms
+84 bytes from 209.165.200.225 icmp_seq=5 ttl=254 time=8.708 ms
+
+```
+
+Выполняем трассировку и ping запрос с PC-C:
+```
+PC-C> trace 209.165.200.225
+trace to 209.165.200.225, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.3   0.186 ms  0.161 ms  0.160 ms
+ 2   *10.2.2.2   8.516 ms (ICMP type:3, code:3, Destination port unreachable)  *
+
+PC-C> ping 209.165.200.225
+
+84 bytes from 209.165.200.225 icmp_seq=1 ttl=254 time=8.541 ms
+84 bytes from 209.165.200.225 icmp_seq=2 ttl=254 time=8.453 ms
+84 bytes from 209.165.200.225 icmp_seq=3 ttl=254 time=8.544 ms
+84 bytes from 209.165.200.225 icmp_seq=4 ttl=254 time=8.546 ms
+84 bytes from 209.165.200.225 icmp_seq=5 ttl=254 time=8.639 ms
+
+```
