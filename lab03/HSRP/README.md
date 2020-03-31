@@ -205,3 +205,5 @@ L        10.2.2.1/32 is directly connected, Serial1/1
 C        192.168.1.0/24 is directly connected, Ethernet0/0
 L        192.168.1.3/32 is directly connected, Ethernet0/0
 ```
+
+### 2. Настройка обеспечения избыточности на первом хопе с помощью HSRP
