@@ -1,0 +1,93 @@
+S1#sh run
+Building configuration...
+
+Current configuration : 1036 bytes
+!
+! Last configuration change at 19:21:13 MSK Tue Mar 31 2020
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service compress-config
+!
+hostname S1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$/9.5$MG4OPJj9DCcmcvPFs0kIy0
+!
+no aaa new-model
+clock timezone MSK 3 0
+!
+!
+!         
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+! 
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+interface Ethernet0/0
+!
+interface Ethernet0/1
+!
+interface Ethernet0/2
+!
+interface Ethernet0/3
+!
+interface Vlan1
+ ip address 192.168.1.11 255.255.255.0
+!
+ip default-gateway 192.168.1.254
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!         
+!
+!
+!
+control-plane
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 104D000A0618
+ logging synchronous
+ login
+line aux 0
+ password 7 104D000A0618
+ login
+line vty 0 4
+ password 7 104D000A0618
+ login
+!
+!
+end
