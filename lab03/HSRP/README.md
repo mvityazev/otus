@@ -26,7 +26,7 @@
 ### Выполнение
 
 #### 1. Построение сети и проверка соединения
-#####Выполняем базовую настройку маршрутизаторов и коммутаторов:
+##### Выполняем базовую настройку маршрутизаторов и коммутаторов:
 ```
 conf t
 hostname RX (SX)
@@ -98,21 +98,27 @@ exit
 ip default-gateway 192.168.1.3
 ```
 
-#####Настройка RIP
+##### Настройка RIP
 --- R1 ----
+```
 router rip
 version 2
 network 192.168.1.0
 network 10.0.0.0
+```
 
 --- R2 ----
+```
 router rip
 version 2
 network 10.0.0.0
 default-information originate
+```
 
 --- R3 ----
+````
 router rip
 version 2
 network 192.168.1.0
 network 10.0.0.0
+```
