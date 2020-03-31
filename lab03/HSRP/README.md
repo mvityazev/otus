@@ -26,10 +26,10 @@
 ### Выполнение
 
 #### 1. Построение сети и проверка соединения
-Выполняем базовую настройку маршрутизаторов:
+Выполняем базовую настройку маршрутизаторов и коммутаторов:
 ```
 conf t
-hostname RX
+hostname RX (SX)
 no ip domain-lookup
 enable secret class
 line console 0
@@ -48,6 +48,8 @@ exit
 service password-encryption
 banner motd $ Authorized Access Only! $
 ```
+
+Настраиваем интерфейсы на маршрутизаторах:
 
 -----R1 ------------
 ```
