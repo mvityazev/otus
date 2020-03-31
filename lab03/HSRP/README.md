@@ -26,3 +26,49 @@
 ### Выполнение
 
 #### 1. Построение сети и проверка соединения
+Выполняем базовую настройку маршрутизаторов
+```
+conf t
+hostname RX
+no ip domain-lookup
+enable secret class
+line console 0
+password cisco
+login
+exec-timeout 0 0
+exit
+line vty 0 4
+password cisco
+login
+exit
+line aux 0
+password cisco
+login
+exit
+service password-encryption
+banner motd $ Authorized Access Only! $
+```
+
+-----R1 ------------
+```
+int serial1/0 
+ip address 10.1.1.1 255.255.255.252
+clock rate 128000
+no sh
+```
+-----R2 ------------
+```
+int serial1/0
+ip address 10.1.1.2 255.255.255.252
+no sh
+int serial1/1
+ip address 10.2.2.2 255.255.255.252
+clock rate 128000
+no sh
+```
+-----R3 ------------
+```
+int serial1/1 
+ip address 10.2.2.1 255.255.255.252
+no sh
+```
