@@ -371,10 +371,15 @@ R3(config-if)#do sh standby brief
 Interface   Grp  Pri P State   Active          Standby         Virtual IP
 Et0/0       1    200   Standby 192.168.1.1     local           192.168.1.254
 
+```
+
+```
 R1(config-if)#sh
 
 R1(config-if)#no sh
+```
 
+```
 R3(config-if)#do sh standby brief
                      P indicates configured to preempt.
                      |
