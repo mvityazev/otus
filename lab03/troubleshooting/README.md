@@ -173,7 +173,7 @@ interface port-channel 3
 ```
 
 ### 2. Поиск и устранение неисправностей в EtherChannel
-Выполняем show interfaces trunk на коммутаторах:
+Проверка коммутатора S1:
 ```
 S1(config-if)#do sh int trunk
 
@@ -196,6 +196,43 @@ Et0/1       none
 ```
 
 ```
+S1#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SD)         LACP      Et0/0(s)    Et0/1(s)    
+2      Po2(SU)         PAgP      Et0/2(P)    Et0/3(P) 
+```
+
+##### Исправляем конфигурацию S1:
+```
+interface range e0/0-1
+no channel-group 1 mode active
+channel-group 1 mode desirable
+
+int range e0/2-3
+switchport mode trunk
+
+interface vlan 99
+ no shutdown
+```
+
+Проверка коммутатора S2:
+```
 S2(config-if)#do sh int tru
 
 Port        Mode             Encapsulation  Status        Native vlan
@@ -215,6 +252,16 @@ Et0/0       none
 Et0/1       none
 ```
 
+##### Исправляем конфигурацию S2:
+```
+interface range e0/2-3
+no shutdown
+
+interface vlan 99
+ no shutdown
+```
+
+Проверка коммутатора S3:
 ```
 S3(config-if)#do sh int trun
 
@@ -229,4 +276,45 @@ Po3         1,10,99
 
 Port        Vlans in spanning tree forwarding state and not pruned
 Po3         none
+```
+
+##### Исправляем конфигурацию S3:
+```
+interface range e0/0-1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode desirable
+ switchport trunk native vlan 99
+ no shutdown
+ 
+interface vlan 99
+ no shutdown
+```
+
+
+### Проверяем сетевое взаимодействие
+
+Между коммутаторами:
+```
+S1(config-if)#do ping 192.168.1.13
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.13, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 1/1/1 ms
+S1(config-if)#do ping 192.168.1.12
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.12, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 1/1/1 ms
+```
+
+Между PC:
+```
+PC-C> ping 192.168.0.2
+
+84 bytes from 192.168.0.2 icmp_seq=1 ttl=64 time=0.519 ms
+84 bytes from 192.168.0.2 icmp_seq=2 ttl=64 time=0.425 ms
+84 bytes from 192.168.0.2 icmp_seq=3 ttl=64 time=0.441 ms
+84 bytes from 192.168.0.2 icmp_seq=4 ttl=64 time=0.428 ms
+84 bytes from 192.168.0.2 icmp_seq=5 ttl=64 time=0.453 ms
 ```
