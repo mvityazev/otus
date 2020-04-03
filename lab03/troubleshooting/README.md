@@ -175,27 +175,24 @@ interface port-channel 3
 ### 2. Поиск и устранение неисправностей в EtherChannel
 Выполняем show interfaces trunk на коммутаторах:
 ```
-S1#sh int trunk
+S1(config-if)#do sh int trunk
 
 Port        Mode             Encapsulation  Status        Native vlan
 Et0/0       on               802.1q         trunking      99
 Et0/1       on               802.1q         trunking      99
-Po2         auto             802.1q         trunking      99
 
 Port        Vlans allowed on trunk
 Et0/0       none
 Et0/1       none
-Po2         1-4094
 
 Port        Vlans allowed and active in management domain
 Et0/0       none
 Et0/1       none
-Po2         1,10,99
 
 Port        Vlans in spanning tree forwarding state and not pruned
 Et0/0       none
 Et0/1       none
-Po2         1,10,99
+
 ```
 
 ```
@@ -219,21 +216,21 @@ Et0/1       1,99
 ```
 
 ```
-S3# sh int trunk
+S3#sh int trunk
 
 Port        Mode             Encapsulation  Status        Native vlan
-Et0/1       on               802.1q         trunking      99
-Po3         on               802.1q         trunking      99
+Et0/2       on               802.1q         trunking      99
+Et0/3       on               802.1q         trunking      99
 
 Port        Vlans allowed on trunk
-Et0/1       1-4094
-Po3         1-4094
+Et0/2       1-4094
+Et0/3       1-4094
 
 Port        Vlans allowed and active in management domain
-Et0/1       1,10,99
-Po3         1,10,99
+Et0/2       1,10,99
+Et0/3       1,10,99
 
 Port        Vlans in spanning tree forwarding state and not pruned
-Et0/1       1,10,99
-Po3         1,10,99
+Et0/2       1,10,99
+Et0/3       1,10,99
 ```
