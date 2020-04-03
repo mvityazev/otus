@@ -196,7 +196,7 @@ Et0/1       none
 ```
 
 ```
-S2#sh int trunk
+S2(config-if)#do sh int tru
 
 Port        Mode             Encapsulation  Status        Native vlan
 Et0/0       on               802.1q         trunking      99
@@ -211,26 +211,22 @@ Et0/0       1,99
 Et0/1       1,99
 
 Port        Vlans in spanning tree forwarding state and not pruned
-Et0/0       1,99
-Et0/1       1,99
+Et0/0       none
+Et0/1       none
 ```
 
 ```
-S3#sh int trunk
+S3(config-if)#do sh int trun
 
 Port        Mode             Encapsulation  Status        Native vlan
-Et0/2       on               802.1q         trunking      99
-Et0/3       on               802.1q         trunking      99
+Po3         on               802.1q         trunking      99
 
 Port        Vlans allowed on trunk
-Et0/2       1-4094
-Et0/3       1-4094
+Po3         1-4094
 
 Port        Vlans allowed and active in management domain
-Et0/2       1,10,99
-Et0/3       1,10,99
+Po3         1,10,99
 
 Port        Vlans in spanning tree forwarding state and not pruned
-Et0/2       1,10,99
-Et0/3       1,10,99
+Po3         none
 ```
