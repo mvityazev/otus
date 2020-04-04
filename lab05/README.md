@@ -27,3 +27,74 @@
 ### Выполнение
 
 #### 1. Создание сети и настройка основных параметров устройства
+
+Выполняем базовую настройку маршрутизаторов:
+```
+conf t
+hostname RX
+no ip domain-lookup
+enable secret class
+line console 0
+password cisco
+login
+exec-timeout 0 0
+exit
+line vty 0 4
+password cisco
+login
+exit
+line aux 0
+password cisco
+login
+exit
+service password-encryption
+banner motd $ Authorized Access Only! $
+```
+
+Выполняем настройку интерфейсов:
+-----R1 ------------
+```
+int lo0
+ip address 209.165.200.225 255.255.255.252
+no sh
+int lo1
+ip address 192.168.1.1 255.255.255.0
+no sh
+int lo2
+ip address 192.168.2.1 255.255.255.0
+no sh
+int serial1/0 
+ip address 192.168.12.1 255.255.255.252
+clock rate 128000
+bandwidth 128
+no sh
+```
+
+-----R2 ------------
+```
+int lo6
+ip address 192.168.6.1 255.255.255.0
+no sh
+int serial1/0 
+ip address 192.168.12.2 255.255.255.252
+no sh
+int serial1/1
+ip address 192.168.23.1 255.255.255.252
+clock rate 128000
+bandwidth 128
+no sh
+```
+
+-----R3 ------------
+```
+int lo4
+ip address 192.168.4.1 255.255.255.0
+no sh
+int lo5
+ip address 192.168.5.1 255.255.255.0
+no sh
+int serial1/1 
+ip address 192.168.23.2 255.255.255.252
+no sh
+```
+
