@@ -121,9 +121,9 @@ network 192.168.3.0 0.0.0.255
 network 10.2.2.0 0.0.0.3
 ```
 
-Проверка отношений смежности и таблиц маршрутизации:
 
---- R1 ----
+##### 3. Проверка маршрутизации EIGRP
+
 ```
 R1(config)#do show ip eigrp neighbors 
 EIGRP-IPv4 Neighbors for AS(10)
@@ -154,8 +154,6 @@ D     192.168.2.0/24 [90/2195456] via 10.1.1.2, 00:08:06, Serial1/0
 D     192.168.3.0/24 [90/2195456] via 10.3.3.2, 00:08:06, Serial1/1
 ```
 
-
---- R2 ----
 ```
 R2(config)#do sh ip eigrp neighbors 
 EIGRP-IPv4 Neighbors for AS(10)
@@ -186,7 +184,6 @@ D     192.168.1.0/24 [90/2195456] via 10.1.1.1, 00:08:44, Serial1/0
 D     192.168.3.0/24 [90/2195456] via 10.2.2.1, 00:08:44, Serial1/1
 ```
 
---- R3 ----
 ```
 R3(config)#do show ip eigrp neighbors 
 EIGRP-IPv4 Neighbors for AS(10)
@@ -217,3 +214,238 @@ D     192.168.1.0/24 [90/2195456] via 10.3.3.1, 00:09:04, Serial1/0
 D     192.168.2.0/24 [90/2195456] via 10.2.2.2, 00:09:04, Serial1/1
 ```
 
+##### Таблица соседних устройств EIGRP
+```
+R1(config)#do sh ip eigrp topology 
+EIGRP-IPv4 Topology Table for AS(10)/ID(192.168.1.1)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status 
+
+P 192.168.3.0/24, 1 successors, FD is 2195456
+        via 10.3.3.2 (2195456/281600), Serial1/1
+P 192.168.2.0/24, 1 successors, FD is 2195456
+        via 10.1.1.2 (2195456/281600), Serial1/0
+P 10.2.2.0/30, 2 successors, FD is 2681856
+        via 10.1.1.2 (2681856/2169856), Serial1/0
+        via 10.3.3.2 (2681856/2169856), Serial1/1
+P 10.3.3.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/1
+P 192.168.1.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 10.1.1.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/0
+```
+
+```
+R2(config)#do sh ip eigrp topology 
+EIGRP-IPv4 Topology Table for AS(10)/ID(192.168.2.1)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status 
+
+P 192.168.3.0/24, 1 successors, FD is 2195456
+        via 10.2.2.1 (2195456/281600), Serial1/1
+P 192.168.2.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 10.2.2.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/1
+P 10.3.3.0/30, 2 successors, FD is 2681856
+        via 10.1.1.1 (2681856/2169856), Serial1/0
+        via 10.2.2.1 (2681856/2169856), Serial1/1
+P 192.168.1.0/24, 1 successors, FD is 2195456
+        via 10.1.1.1 (2195456/281600), Serial1/0
+P 10.1.1.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/0
+```
+
+```
+R3(config)#do sh ip eigrp topology 
+EIGRP-IPv4 Topology Table for AS(10)/ID(192.168.3.1)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status 
+
+P 192.168.3.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 192.168.2.0/24, 1 successors, FD is 2195456
+        via 10.2.2.2 (2195456/281600), Serial1/1
+P 10.2.2.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/1
+P 10.3.3.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/0
+P 192.168.1.0/24, 1 successors, FD is 2195456
+        via 10.3.3.1 (2195456/281600), Serial1/0
+P 10.1.1.0/30, 2 successors, FD is 2681856
+        via 10.2.2.2 (2681856/2169856), Serial1/1
+        via 10.3.3.1 (2681856/2169856), Serial1/0
+```
+
+##### Параметры маршрутизации EIGRP и объявленные сети
+```
+R1(config)#do sh ip protocol
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "eigrp 10"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(10)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 192.168.1.1
+    Topology : 0 (base) 
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    10.1.1.0/30
+    10.3.3.0/30
+    192.168.1.0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.3.3.2              90      01:22:31
+    10.1.1.2              90      01:22:31
+  Distance: internal 90 external 170
+```
+
+
+Номер автономной сети: 10
+
+Анонсируются сети: 10.1.1.0/30, 10.3.3.0/30, 192.168.1.0/24
+
+Значение административной дистанции: 90
+
+Кол-во маршрутов с равной стоймостью: 4
+
+
+#### 4. Настройка пропускной способности и пассивных интерфейсов
+Выполняем настройку на маршрутизаторах:
+
+--- R1 ----
+```
+interface s1/0
+bandwidth 2000
+interface s1/1
+bandwidth 64
+router eigrp 10
+passive-interface e0/0
+```
+
+--- R2 ----
+```
+interface s1/0
+bandwidth 2000
+interface s1/1
+bandwidth 2000
+router eigrp 10
+passive-interface e0/0
+```
+
+--- R3 ----
+```
+interface s1/0
+bandwidth 64
+interface s1/1
+bandwidth 2000
+router eigrp 10
+passive-interface e0/0
+```
+
+Проверка:
+```
+R1(config)#do sh ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+C        10.1.1.0/30 is directly connected, Serial1/0
+L        10.1.1.1/32 is directly connected, Serial1/0
+D        10.2.2.0/30 [90/2304000] via 10.1.1.2, 00:02:46, Serial1/0
+C        10.3.3.0/30 is directly connected, Serial1/1
+L        10.3.3.1/32 is directly connected, Serial1/1
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/24 is directly connected, Ethernet0/0
+L        192.168.1.1/32 is directly connected, Ethernet0/0
+D     192.168.2.0/24 [90/1817600] via 10.1.1.2, 00:02:52, Serial1/0
+D     192.168.3.0/24 [90/2329600] via 10.1.1.2, 00:02:46, Serial1/0
+```
+
+```
+R2(config)#do sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+C        10.1.1.0/30 is directly connected, Serial1/0
+L        10.1.1.2/32 is directly connected, Serial1/0
+C        10.2.2.0/30 is directly connected, Serial1/1
+L        10.2.2.2/32 is directly connected, Serial1/1
+D        10.3.3.0/30 [90/41024000] via 10.2.2.1, 00:14:14, Serial1/1
+                     [90/41024000] via 10.1.1.1, 00:14:14, Serial1/0
+D     192.168.1.0/24 [90/1817600] via 10.1.1.1, 00:14:14, Serial1/0
+      192.168.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.2.0/24 is directly connected, Ethernet0/0
+L        192.168.2.1/32 is directly connected, Ethernet0/0
+D     192.168.3.0/24 [90/1817600] via 10.2.2.1, 00:14:26, Serial1/1
+```
+
+```
+R3(config)#do sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+D        10.1.1.0/30 [90/2304000] via 10.2.2.2, 00:14:35, Serial1/1
+C        10.2.2.0/30 is directly connected, Serial1/1
+L        10.2.2.1/32 is directly connected, Serial1/1
+C        10.3.3.0/30 is directly connected, Serial1/0
+L        10.3.3.2/32 is directly connected, Serial1/0
+D     192.168.1.0/24 [90/2329600] via 10.2.2.2, 00:14:35, Serial1/1
+D     192.168.2.0/24 [90/1817600] via 10.2.2.2, 00:14:35, Serial1/1
+      192.168.3.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.3.0/24 is directly connected, Ethernet0/0
+L        192.168.3.1/32 is directly connected, Ethernet0/0
+```
