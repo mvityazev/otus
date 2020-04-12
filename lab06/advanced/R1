@@ -1,0 +1,181 @@
+R1(config)#do sh run
+Building configuration...
+
+Current configuration : 2290 bytes
+!
+! Last configuration change at 22:47:25 MSK Sun Apr 12 2020
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$EhW2$3AvtdhWWo9UFOGWrQibnQ/
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!         
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 192.168.11.1 255.255.255.252
+!
+interface Loopback5
+ ip address 192.168.11.5 255.255.255.252
+!
+interface Loopback9
+ ip address 192.168.11.9 255.255.255.252
+!
+interface Loopback13
+ ip address 192.168.11.13 255.255.255.252
+!
+interface Ethernet0/0
+ ip address 192.168.1.1 255.255.255.0
+!
+interface Ethernet0/1
+ no ip address
+ shutdown
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Serial1/0
+ bandwidth 1024
+ ip address 192.168.12.1 255.255.255.252
+ ip bandwidth-percent eigrp 1 75
+ ip hello-interval eigrp 1 60
+ ip hold-time eigrp 1 180
+ serial restart-delay 0
+ clock rate 1008000
+!
+interface Serial1/1
+ bandwidth 64
+ ip address 192.168.13.1 255.255.255.252
+ ip bandwidth-percent eigrp 1 40
+ ip hello-interval eigrp 1 60
+ ip hold-time eigrp 1 180
+ serial restart-delay 0
+!
+interface Serial1/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial1/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+!
+router eigrp 1
+ network 192.168.1.0
+ network 192.168.11.0 0.0.0.3
+ network 192.168.11.4 0.0.0.3
+ network 192.168.11.8 0.0.0.3
+ network 192.168.11.12 0.0.0.3
+ network 192.168.12.0 0.0.0.3
+ network 192.168.13.0 0.0.0.3
+ auto-summary
+ passive-interface Ethernet0/0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!         
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 01100F175804
+ logging synchronous
+ login
+line aux 0
+ password 7 01100F175804
+ login
+line vty 0 4
+ password 7 01100F175804
+ login
+ transport input none
+!
+!
+end
