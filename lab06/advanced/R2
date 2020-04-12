@@ -1,7 +1,7 @@
-R2#sh run
+R2(config)#do sh run
 Building configuration...
 
-Current configuration : 1970 bytes
+Current configuration : 1971 bytes
 !
 ! Last configuration change at 22:46:06 MSK Sun Apr 12 2020
 !
@@ -99,7 +99,7 @@ interface Ethernet0/3
 !
 interface Serial1/0
  bandwidth 1024
- ip address 19.168.12.2 255.255.255.252
+ ip address 192.168.12.2 255.255.255.252
  ip bandwidth-percent eigrp 1 75
  ip hello-interval eigrp 1 60
  ip hold-time eigrp 1 180
