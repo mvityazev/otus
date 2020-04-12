@@ -1,4 +1,4 @@
-# Базовая настройка протокола EIGRP для IPv4
+# Расширенная настройка протокола EIGRP для IPv4
 
 ### Топология
 ![](eve.png)
@@ -345,3 +345,121 @@ D        192.168.33.0 [90/2297856] via 192.168.23.2, 00:00:04, Serial1/1
 ```
 
 #### 4. Настройка и распространение статического маршрута по умолчанию
+
+Настройка loopback интерфейса на R2:
+```
+interface lo1
+ip address 192.168.22.1 255.255.255.252
+ip route 0.0.0.0 0.0.0.0 Lo1
+router eigrp 1
+redistribute static
+```
+
+Проверка:
+```
+R1(config)#do sh ip route eigrp | include 0.0.0.0
+Gateway of last resort is 192.168.13.2 to network 0.0.0.0
+D*EX  0.0.0.0/0 [170/41152000] via 192.168.13.2, 00:03:12, Serial1/1
+```
+
+Административная дистанция - 170.
+
+#### 5. Выполнение точной настройки EIGRP
+
+##### Настройка параметров использования пропускной способности.
+
+--- R1 ----
+```
+interface s1/0
+ip bandwidth-percent eigrp 1 75
+interface s1/1
+ip bandwidth-percent eigrp 1 40
+```
+
+--- R2 ----
+```
+interface s1/0
+ip bandwidth-percent eigrp 1 75
+```
+
+--- R3 ----
+```
+interface s1/0
+ip bandwidth-percent eigrp 1 40
+```
+
+##### Настройка интервалов отправки пакетов приветствия и таймер удержания.
+
+Текущие настройки:
+```
+R2(config)#do show ip eigrp interfaces detail
+EIGRP-IPv4 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Se1/1                    1        0/0       0/0          11       0/16          60           0
+  Hello-interval is 5, Hold-time is 15
+  Split-horizon is enabled
+  Next xmit serial <none>
+  Packetized sent/expedited: 13/0
+  Hello's sent/expedited: 862/2
+  Un/reliable mcasts: 0/0  Un/reliable ucasts: 15/14
+  Mcast exceptions: 0  CR packets: 0  ACKs suppressed: 0
+  Retransmissions sent: 0  Out-of-sequence rcvd: 0
+  Topology-ids on interface - 0 
+  Authentication mode is not set
+```
+Таймер приветствия по умолчанию: 5.
+
+Таймер удержания по умолчанию: 15.
+
+Выполним настройку интервалов:
+
+--- R1 ----
+```
+interface s1/0
+ip hello-interval eigrp 1 60
+ip hold-time eigrp 1 180
+interface s1/1
+ip hello-interval eigrp 1 60
+ip hold-time eigrp 1 180
+```
+
+--- R2 ----
+```
+interface s1/0
+ip hello-interval eigrp 1 60
+ip hold-time eigrp 1 180
+interface s1/1
+ip hello-interval eigrp 1 60
+ip hold-time eigrp 1 180
+```
+
+--- R3 ----
+```
+interface s1/0
+ip hello-interval eigrp 1 60
+ip hold-time eigrp 1 180
+interface s1/1
+ip hello-interval eigrp 1 60
+ip hold-time eigrp 1 180
+```
+
+
+Проверка:
+```
+R2(config)#do show ip eigrp interfaces detail
+EIGRP-IPv4 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Se1/1                    1        0/0       0/0           9       0/16          56           0
+  Hello-interval is 60, Hold-time is 180
+  Split-horizon is enabled
+  Next xmit serial <none>
+  Packetized sent/expedited: 16/0
+  Hello's sent/expedited: 930/2
+  Un/reliable mcasts: 0/0  Un/reliable ucasts: 18/17
+  Mcast exceptions: 0  CR packets: 0  ACKs suppressed: 0
+  Retransmissions sent: 0  Out-of-sequence rcvd: 0
+  Topology-ids on interface - 0 
+  Authentication mode is not set
+```
