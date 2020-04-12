@@ -86,7 +86,7 @@ no shutdown
 -----R2 ------------
 ```
 int serial1/0 
-ip address 19.168.12.2 255.255.255.252
+ip address 192.168.12.2 255.255.255.252
 no shutdown
 int serial1/1 
 ip address 192.168.23.1 255.255.255.252
@@ -452,21 +452,62 @@ ip hold-time eigrp 1 180
 
 Проверка:
 ```
-R2(config)#do show ip eigrp interfaces detail
+R2(config)#do sh ip eigrp interfaces detail 
 EIGRP-IPv4 Interfaces for AS(1)
                               Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
 Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
-Se1/1                    1        0/0       0/0           9       0/16          56           0
+Se1/1                    1        0/0       0/0          11       0/16          56           0
   Hello-interval is 60, Hold-time is 180
   Split-horizon is enabled
   Next xmit serial <none>
-  Packetized sent/expedited: 16/0
-  Hello's sent/expedited: 930/2
-  Un/reliable mcasts: 0/0  Un/reliable ucasts: 18/17
+  Packetized sent/expedited: 45/0
+  Hello's sent/expedited: 956/2
+  Un/reliable mcasts: 0/0  Un/reliable ucasts: 47/46
   Mcast exceptions: 0  CR packets: 0  ACKs suppressed: 0
   Retransmissions sent: 0  Out-of-sequence rcvd: 0
   Topology-ids on interface - 0 
   Authentication mode is not set
+Se1/0                    1        0/0       0/0          20       0/15         103           0
+  Hello-interval is 60, Hold-time is 180
+  Split-horizon is enabled
+  Next xmit serial <none>
+  Packetized sent/expedited: 2/0
+  Hello's sent/expedited: 5/2
+  Un/reliable mcasts: 0/0  Un/reliable ucasts: 2/3
+  Mcast exceptions: 0  CR packets: 0  ACKs suppressed: 0
+  Retransmissions sent: 0  Out-of-sequence rcvd: 0
+  Topology-ids on interface - 0 
+  Interface BW percentage is 75
+  Authentication mode is not set
+```
+
+```
+R2(config)# do sh ip route eigrp 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is 0.0.0.0 to network 0.0.0.0
+
+D     192.168.1.0/24 [90/3037440] via 192.168.12.1, 00:04:40, Serial1/0
+D     192.168.3.0/24 [90/2195456] via 192.168.23.2, 00:04:40, Serial1/1
+D     192.168.11.0/24 [90/3139840] via 192.168.12.1, 00:04:40, Serial1/0
+      192.168.12.0/24 is variably subnetted, 3 subnets, 3 masks
+D        192.168.12.0/24 [90/41536000] via 192.168.23.2, 00:12:51, Serial1/1
+      192.168.13.0/24 is variably subnetted, 2 subnets, 2 masks
+D        192.168.13.0/24 [90/41024000] via 192.168.12.1, 00:04:40, Serial1/0
+D        192.168.13.0/30 [90/41024000] via 192.168.23.2, 01:27:40, Serial1/1
+      192.168.33.0/30 is subnetted, 4 subnets
+D        192.168.33.0 [90/2297856] via 192.168.23.2, 00:04:40, Serial1/1
+D        192.168.33.4 [90/2297856] via 192.168.23.2, 00:04:40, Serial1/1
+D        192.168.33.8 [90/2297856] via 192.168.23.2, 00:04:40, Serial1/1
+D        192.168.33.12 [90/2297856] via 192.168.23.2, 00:04:40, Serial1/1
 ```
 
 #### Вопросы для повторения:
