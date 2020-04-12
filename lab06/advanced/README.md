@@ -63,3 +63,45 @@ banner motd $ Authorized Access Only! $
 ```
 
 Выполним настройку интерфейсов.
+
+-----R1 ------------
+```
+int serial1/0 
+ip address 192.168.12.1 255.255.255.252
+clock rate 1024000
+no shutdown
+int serial1/1 
+ip address 192.168.13.1 255.255.255.252
+no shutdown
+interface e0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+```
+
+-----R2 ------------
+```
+int serial1/0 
+ip address 19.168.12.2 255.255.255.252
+no shutdown
+int serial1/1 
+ip address 192.168.23.1 255.255.255.252
+clock rate 64000
+no shutdown
+interface e0/0
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+```
+
+-----R3 ------------
+```
+int serial1/0 
+ip address 192.168.13.2 255.255.255.252
+clock rate 1544000
+no shutdown
+int serial1/1 
+ip address 192.168.23.2 255.255.255.252
+no shutdown
+interface e0/0
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+```
