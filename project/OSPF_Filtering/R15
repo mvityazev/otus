@@ -1,0 +1,172 @@
+R15(config)#do sh run
+Building configuration...
+
+Current configuration : 2449 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R15
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$bLKS$ZFQmEgb2pxO3tuX7uw.Bk.
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.254.15 255.255.255.255
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1::15/128
+!
+interface Ethernet0/0
+ ip address 10.1.255.13 255.255.255.252
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1500::1/64
+!
+interface Ethernet0/1
+ ip address 10.1.255.17 255.255.255.252
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1501::1/64
+!         
+interface Ethernet0/2
+ ip address 100.20.0.2 255.255.255.252
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:B:2:2100::1502/64
+!
+interface Ethernet0/3
+ ip address 10.1.255.21 255.255.255.252
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1503::1/64
+!
+interface Ethernet1/0
+ ip address 10.1.255.26 255.255.255.252
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1410::1510/64
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!         
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ area 10 stub
+ area 101 stub
+ area 102 filter-list prefix FROM_R19 in
+ passive-interface Ethernet0/2
+ network 10.1.254.15 0.0.0.0 area 0
+ network 10.1.255.12 0.0.0.3 area 10
+ network 10.1.255.16 0.0.0.3 area 10
+ network 10.1.255.20 0.0.0.3 area 102
+ network 10.1.255.24 0.0.0.3 area 0
+ network 100.20.0.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 100.20.0.1
+!         
+!
+ip prefix-list FROM_R19 seq 10 deny 10.1.254.19/32
+ip prefix-list FROM_R19 seq 20 deny 10.1.255.8/30 le 32
+ip prefix-list FROM_R19 seq 30 permit 0.0.0.0/0 le 32
+ipv6 route ::/0 2001:B:2:2100::1
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 0822455D0A16
+ logging synchronous
+ login    
+line aux 0
+line vty 0 4
+ password 7 01100F175804
+ login
+ transport input none
+!
+!
+end
