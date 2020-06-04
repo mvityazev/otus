@@ -28,7 +28,6 @@ router ospf 1
  network 10.1.255.4 0.0.0.3 area 10
  network 10.1.255.8 0.0.0.3 area 101
  network 10.1.255.24 0.0.0.3 area 0
- network 100.10.0.0 0.0.0.3 area 0
 
 ```
 
@@ -41,7 +40,6 @@ router ospf 1
  network 10.1.255.16 0.0.0.3 area 10
  network 10.1.255.20 0.0.0.3 area 102
  network 10.1.255.24 0.0.0.3 area 0
- network 100.20.0.0 0.0.0.3 area 0
 ```
 
 
