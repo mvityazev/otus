@@ -1,0 +1,176 @@
+R14(config)#do sh run
+Building configuration...
+
+Current configuration : 2408 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R14
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$aLRP$ltEUUv2f5OfKhNkkMKMFs/
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.254.14 255.255.255.255
+ ipv6 address FE80::14 link-local
+ ipv6 address 2001:A:1::14/128
+ ipv6 ospf 1 area 0
+!
+interface Ethernet0/0
+ ip address 10.1.255.1 255.255.255.252
+ ipv6 address FE80::14 link-local
+ ipv6 address 2001:A:1:1400::1/64
+ ipv6 ospf 1 area 10
+!
+interface Ethernet0/1
+ ip address 10.1.255.5 255.255.255.252
+ ipv6 address FE80::14 link-local
+ ipv6 address 2001:A:1:1401::1/64
+ ipv6 ospf 1 area 10
+!
+interface Ethernet0/2
+ ip address 100.10.0.2 255.255.255.252
+ ipv6 address FE80::14 link-local
+ ipv6 address 2001:B:1:2200::1402/64
+!
+interface Ethernet0/3
+ ip address 10.1.255.9 255.255.255.252
+ ipv6 address FE80::14 link-local
+ ipv6 address 2001:A:1:1403::1/64
+ ipv6 ospf 1 area 101
+!
+interface Ethernet1/0
+ ip address 10.1.255.25 255.255.255.252
+ ipv6 address FE80::14 link-local
+ ipv6 address 2001:A:1:1410::1/64
+ ipv6 ospf 1 area 0
+!
+interface Ethernet1/1
+ no ip address
+ shutdown 
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ area 10 stub
+ area 101 stub no-summary
+ passive-interface Ethernet0/2
+ network 10.1.254.14 0.0.0.0 area 0
+ network 10.1.255.0 0.0.0.3 area 10
+ network 10.1.255.4 0.0.0.3 area 10
+ network 10.1.255.8 0.0.0.3 area 101
+ network 10.1.255.24 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 100.10.0.1
+!
+ipv6 route ::/0 2001:B:1:2200::1
+ipv6 router ospf 1
+ area 10 stub
+ area 101 stub no-summary
+ passive-interface Ethernet0/2
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 094F471A1A0A
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 0822455D0A16
+ login
+ transport input none
+!
+!
+end
