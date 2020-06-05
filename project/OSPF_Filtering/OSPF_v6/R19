@@ -1,0 +1,144 @@
+R19(config)#do sh run
+Building configuration...
+
+Current configuration : 1559 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R19
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$RiYb$k.fSHEFEMsuLkg4mhuyIc/
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.254.19 255.255.255.255
+ ipv6 address FE80::19 link-local
+ ipv6 address 2001:A:1::19/128
+ ipv6 ospf 1 area 101
+!
+interface Ethernet0/0
+ ip address 10.1.255.10 255.255.255.252
+ ipv6 address FE80::19 link-local
+ ipv6 address 2001:A:1:1403::1900/64
+ ipv6 ospf 1 area 101
+!
+interface Ethernet0/1
+ no ip address
+ shutdown 
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ area 101 stub no-summary
+ network 10.1.254.19 0.0.0.0 area 101
+ network 10.1.255.8 0.0.0.3 area 101
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ipv6 router ospf 1
+ area 101 stub no-summary
+!         
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 14141B180F0B
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 0822455D0A16
+ login
+ transport input none
+!
+!
+end
