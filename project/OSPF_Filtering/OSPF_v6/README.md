@@ -18,6 +18,7 @@
 
 
 Выполним настройки OSPF:
+
 R14:
 ```
 ipv6 unicast-routing
