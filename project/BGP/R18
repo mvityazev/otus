@@ -1,0 +1,148 @@
+R18(config)#do sh run
+Building configuration...
+
+Current configuration : 1961 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R18
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$E838$E1mu.O9cE2HaipRV5OhVM/
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.2.254.18 255.255.255.255
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:A:2::18/128
+!
+interface Ethernet0/0
+ ip address 10.2.255.9 255.255.255.252
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:A:2:1800::1/64
+!
+interface Ethernet0/1
+ ip address 10.2.255.5 255.255.255.252
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:A:2:1801::1/64
+!         
+interface Ethernet0/2
+ ip address 100.30.0.18 255.255.255.252
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:B:3:2403::1802/64
+!
+interface Ethernet0/3
+ ip address 100.30.0.38 255.255.255.252
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:B:3:2603::1803/64
+!
+router bgp 2042
+ bgp log-neighbor-changes
+ network 10.2.0.0 mask 255.255.0.0
+ neighbor 100.30.0.17 remote-as 520
+ neighbor 100.30.0.37 remote-as 520
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 10.2.0.0 255.255.0.0 Null0
+ip route 10.2.0.0 255.255.0.0 10.2.255.6
+ip route 10.2.0.0 255.255.0.0 10.2.255.10
+!
+ipv6 route 2001:A:2::/48 2001:A:2:1800::1601
+ipv6 route 2001:A:2::/48 2001:A:2:1801::1701
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 05080F1C2243
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 02050D480809
+ login
+ transport input none
+!
+!
+end
