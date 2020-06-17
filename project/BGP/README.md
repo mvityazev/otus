@@ -44,7 +44,7 @@ network 10.1.0.0 mask 255.255.0.0
 ip route 100.20.0.0 255.255.0.0 Null0
 router bgp 301
 neighbor 100.20.0.2 remote-as 1001
-network 100.10.0.0 mask 255.255.0.0
+network 100.20.0.0 mask 255.255.0.0
 ```
 
 ### 2. Настройка eBGP между провайдерами Киторн и Ламас
