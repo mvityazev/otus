@@ -1,0 +1,170 @@
+R16(config)#do sh run
+Building configuration...
+
+Current configuration : 2389 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R16
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$K96S$9ncEn/MPkhWm0tLqssI1V0
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.2.254.16 255.255.255.255
+ ipv6 address FE80::16 link-local
+ ipv6 address 2001:A:2::16/128
+!
+interface Ethernet0/0
+ no ip address
+!
+interface Ethernet0/0.8
+ description VPC8
+ encapsulation dot1Q 8
+ ip address 10.2.0.16 255.255.255.0
+ standby version 2
+ standby 1 ip 10.2.0.200
+ ipv6 address FE80::16 link-local
+ ipv6 address 2001:A:2:FFF8::16/64
+!
+interface Ethernet0/0.9
+ description VPC9
+ encapsulation dot1Q 9
+ ip address 10.2.1.16 255.255.255.0
+ standby version 2
+ standby 1 ip 10.2.1.200
+ standby 1 priority 150
+ standby 1 preempt
+ ipv6 address FE80::16 link-local
+ ipv6 address 2001:A:2:FFF9::16/64
+!
+interface Ethernet0/0.99
+ description MNGT
+ encapsulation dot1Q 99
+ ip address 10.2.254.216 255.255.255.128
+ ipv6 address FE80::16 link-local
+ ipv6 address 2001:A:2:FF99::16/64
+!
+interface Ethernet0/1
+ ip address 10.2.255.10 255.255.255.252
+ ipv6 address FE80::16 link-local
+ ipv6 address 2001:A:2:1800::1601/64
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ ip address 10.2.255.13 255.255.255.252
+ ipv6 address FE80::16 link-local
+ ipv6 address 2001:A:2:1603::1/64
+!
+router bgp 2042
+ bgp log-neighbor-changes
+ neighbor 10.2.254.18 remote-as 2042
+ neighbor 10.2.254.18 update-source Loopback0
+ neighbor 10.2.254.18 next-hop-self
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.2.255.9
+ip route 10.2.254.18 255.255.255.255 10.2.255.9
+ip route 10.2.254.32 255.255.255.255 10.2.255.14
+!
+ipv6 route ::/0 2001:A:2:1800::1
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 110A1016141D
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 01100F175804
+ login
+ transport input none
+!
+!
+end
