@@ -63,9 +63,9 @@ neighbor 100.30.255.23 update-source lo0
 Настроим local-preference на R15:
 ```
 router bgp 1001
-neighbor 100.20.0.1 route-map KITORN in
+neighbor 100.20.0.1 route-map LAMAS in
 
-route-map KITORN permit 10
+route-map LAMAS permit 10
 set local-preference 200
 ```
 
