@@ -1,0 +1,142 @@
+R32(config)#do sh run
+Building configuration...
+
+Current configuration : 1615 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R32
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Aonu$E33Wi7pHRNVDTxkkAPIo11
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.2.254.32 255.255.255.255
+ ipv6 address FE80::32 link-local
+ ipv6 address 2001:A:2::32/128
+!
+interface Ethernet0/0
+ ip address 10.2.255.14 255.255.255.252
+ ipv6 address FE80::32 link-local
+ ipv6 address 2001:A:2:1603::3200/64
+!
+interface Ethernet0/1
+ no ip address
+ shutdown
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+router bgp 2042
+ bgp log-neighbor-changes
+ neighbor 10.2.254.18 remote-as 2042
+ neighbor 10.2.254.18 update-source Loopback0
+ neighbor 10.2.254.18 next-hop-self
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.2.255.13
+ip route 10.2.254.18 255.255.255.255 10.2.255.13
+!
+ipv6 route ::/0 2001:A:2:1603::1
+!
+!         
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 13061E010803
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 05080F1C2243
+ login
+ transport input none
+!
+!         
+end
