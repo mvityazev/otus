@@ -1,0 +1,178 @@
+R25(config)#do sh run
+Building configuration...
+
+Current configuration : 2418 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R25
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Hh.y$zzt8hMGIhnvmxzjxp6AuR.
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 100.30.255.25 255.255.255.255
+ ipv6 address 2001:B:3::25/128
+ ipv6 ospf 1 area 0
+!
+interface Ethernet0/0
+ ip address 100.30.0.5 255.255.255.252
+ ipv6 address FE80::25 link-local
+ ipv6 address 2001:B:3:2301::2500/64
+ ipv6 ospf 1 area 0
+!
+interface Ethernet0/1
+ ip address 100.30.0.21 255.255.255.252
+ ipv6 address FE80::25 link-local
+ ipv6 address 2001:B:3:2501::1/64
+ ipv6 ospf 1 area 0
+!
+interface Ethernet0/2
+ ip address 100.30.0.25 255.255.255.252
+ ipv6 address FE80::25 link-local
+ ipv6 address 2001:B:3:2502::1/64
+ ipv6 ospf 1 area 0
+!
+interface Ethernet0/3
+ ip address 100.30.0.29 255.255.255.252
+ ipv6 address FE80::25 link-local
+ ipv6 address 2001:B:3:2503::1/64
+ ipv6 ospf 1 area 0
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ redistribute static subnets
+ passive-interface Ethernet0/1
+ passive-interface Ethernet0/3
+ network 100.30.0.4 0.0.0.3 area 0
+ network 100.30.0.20 0.0.0.3 area 0
+ network 100.30.0.24 0.0.0.3 area 0
+ network 100.30.0.28 0.0.0.3 area 0
+ network 100.30.255.25 0.0.0.0 area 0
+!
+router bgp 520
+ bgp log-neighbor-changes
+ neighbor 100.30.255.23 remote-as 520
+ neighbor 100.30.255.23 update-source Loopback0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 10.3.0.0 255.255.254.0 100.30.0.30
+!
+ipv6 route 2001:A:3::/48 2001:B:3:2503::2801
+ipv6 router ospf 1
+ passive-interface Ethernet0/1
+ passive-interface Ethernet0/3
+ redistribute static
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!         
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password cisco
+ login
+ transport input none
+!
+!
+end
