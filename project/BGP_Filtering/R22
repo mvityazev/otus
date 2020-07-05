@@ -1,0 +1,166 @@
+R22(config)#do sh run
+Building configuration...
+
+Current configuration : 2116 bytes
+!
+! Last configuration change at 23:30:57 MSK Sun Jul 5 2020
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R22
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Ko98$j4imPehWUfVf2d1UhoJZD/
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!         
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 100.10.255.22 255.255.255.255
+ ipv6 address FE80::22 link-local
+ ipv6 address 2001:B:1::22/128
+!
+interface Ethernet0/0
+ ip address 100.10.0.1 255.255.255.252
+ ipv6 address FE80::22 link-local
+ ipv6 address 2001:B:1:2200::1/64
+!
+interface Ethernet0/1
+ ip address 100.20.0.6 255.255.255.252
+ ipv6 address FE80::22 link-local
+ ipv6 address 2001:B:2:2101::2201/64
+!
+interface Ethernet0/2
+ ip address 100.10.0.5 255.255.255.252
+ ipv6 address FE80::22 link-local
+ ipv6 address 2001:B:1:2202::1/64
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router bgp 101
+ bgp log-neighbor-changes
+ network 100.10.0.0 mask 255.255.0.0
+ neighbor 100.10.0.2 remote-as 1001
+ neighbor 100.10.0.2 default-originate
+ neighbor 100.10.0.2 prefix-list MSK out
+ neighbor 100.10.0.6 remote-as 520
+ neighbor 100.20.0.5 remote-as 301
+ auto-summary
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 100.10.0.0 255.255.0.0 Null0
+!
+!
+ip prefix-list MSK seq 10 deny 0.0.0.0/0
+!         
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 13061E010803
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 13061E010803
+ login
+ transport input none
+!         
+!
+end
