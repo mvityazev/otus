@@ -92,22 +92,7 @@ interface Tunnel0
  ip nhrp holdtime 300
  ip nhrp nhs 10.1.255.190
  ip nhrp shortcut
- ip ospf network broadcast
- ip ospf priority 0
- tunnel source Ethernet0/0
- tunnel mode gre multipoint
-!
-interface Tunnel10
- description DMVPN_MSK_R15
- ip address 10.1.255.193 255.255.255.192
- no ip redirects
- ip nhrp authentication otus
- ip nhrp map 10.1.255.254 200.1.0.254
- ip nhrp map multicast 200.1.0.254
- ip nhrp network-id 10
- ip nhrp holdtime 300
- ip nhrp nhs 10.1.255.254
- ip nhrp shortcut
+ ip nhrp redirect
  ip ospf network broadcast
  ip ospf priority 0
  tunnel source Ethernet0/0
