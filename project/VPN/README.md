@@ -6,7 +6,7 @@
 1. Настроим GRE между офисами Москва и С.-Петербург
 2. Настроим DMVPN между Москва и Чокурдах, Лабытнанги
 
-![](tunnel.png)
+![](tunnel2.png)
 
 ### 1. Настроим GRE между офисами Москва и С.-Петербург
 
@@ -59,7 +59,7 @@ tunnel destination 200.1.0.254
 
 ### 2. Настроим DMVPN между Москва и Чокурдах, Лабытнанги
 
-Для обеспечения резервирования будем создавать по два туннеля до MSK. Настроим DMVPN в режиме работы Phase 3. Выполняем следующие настройки на маршрутизаторах:
+Настроим DMVPN в режиме работы Phase 3. Выполняем следующие настройки на маршрутизаторах:
 
 Москва, AS 1001:
 
@@ -112,25 +112,9 @@ interface Tunnel0
  ip ospf priority 0
  tunnel source Ethernet0/0
  tunnel mode gre multipoint
-
-interface Tunnel10
- description DMVPN_MSK_R15
- ip address 10.1.255.193 255.255.255.192
- no ip redirects
- ip nhrp authentication otus
- ip nhrp map 10.1.255.254 200.1.0.254
- ip nhrp map multicast 200.1.0.254
- ip nhrp network-id 10
- ip nhrp holdtime 300
- ip nhrp nhs 10.1.255.254
- ip nhrp shortcut
- ip ospf network broadcast
- ip ospf priority 0
- tunnel source Ethernet0/0
- tunnel mode gre multipoint
 ```
 
-Чокурдах (R28):
+Для обеспечения резервирования в офисе Чокурдах создадим два туннеля до MSK (один через E0/0, другой через E0/1). Настройки на маршрутизаторе (R28):
 ```
 interface Tunnel0
  description DMVPN_MSK_R14
