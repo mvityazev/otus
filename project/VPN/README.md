@@ -108,6 +108,7 @@ interface Tunnel0
  ip nhrp holdtime 300
  ip nhrp nhs 10.1.255.190
  ip nhrp shortcut
+ ip nhrp redirect
  ip ospf network broadcast
  ip ospf priority 0
  tunnel source Ethernet0/0
@@ -127,6 +128,7 @@ interface Tunnel0
  ip nhrp holdtime 300
  ip nhrp nhs 10.1.255.190
  ip nhrp shortcut
+ ip nhrp redirect
  ip ospf network broadcast
  ip ospf priority 0
  tunnel source Ethernet0/0
@@ -143,6 +145,7 @@ interface Tunnel10
  ip nhrp holdtime 300
  ip nhrp nhs 10.1.255.254
  ip nhrp shortcut
+ ip nhrp redirect
  ip ospf network broadcast
  ip ospf priority 0
  tunnel source Ethernet0/1
