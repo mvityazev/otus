@@ -1,0 +1,322 @@
+R28(config)#do copy run start 
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R28(config)#do sh run
+Building configuration...
+
+Current configuration : 8312 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R28
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$G0R8$SJzMLOTGnMD1Aeuuq561b/
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef    
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+crypto pki trustpoint VPN
+ enrollment url http://10.1.254.20:80
+ subject-name CN=R28,OU=VPN,O=Otus,C=RU
+ revocation-check none
+ rsakeypair VPN
+!
+!
+crypto pki certificate chain VPN
+ certificate 06
+  30820323 3082020B A0030201 02020106 300D0609 2A864886 F70D0101 05050030 
+  0D310B30 09060355 04031302 4341301E 170D3230 30383033 31383134 35325A17 
+  0D323130 38303331 38313435 325A304C 310B3009 06035504 06130252 55310D30 
+  0B060355 040A1304 4F747573 310C300A 06035504 0B130356 504E310C 300A0603 
+  55040313 03523238 31123010 06092A86 4886F70D 01090216 03523238 30820122 
+  300D0609 2A864886 F70D0101 01050003 82010F00 3082010A 02820101 00A707FA 
+  FA3C2060 742C65F7 38601498 4413186E 89CB6987 3066AB5D C5776811 3A8EE5E5 
+  9FB53ABE D9CFFC4E 32947B87 AF4DF592 E51D5A58 9F18D29A 31C13D8E E6CDD276 
+  EF9C223B 57C18515 D98C5949 7C3AC509 9FBB3640 E93FADED 500688E8 F835CD37 
+  B5D34465 55043AA5 A17C5C6A 33BE87FD C937D828 AE9DD135 791F4685 9C5DFD24 
+  48D38112 42632F7A B75A6CB5 46F7DF53 02FEFD1E 7C1E691C 9CDC09D0 FC668E9B 
+  798BE128 141F5F46 007EC68E 5307E80B A87B5D85 37A193C3 82E63BDD 30B6ADFE 
+  27D9E195 ABC3FD17 07D63CEC 30B39683 5F980272 4F8CC88C B355B4C6 22AEE9A2 
+  D1A54A03 0CE31D20 3BA8FDDA 493F74AF EEFF4365 19E865F0 90942E2F 09020301 
+  0001A34F 304D300B 0603551D 0F040403 0205A030 1F060355 1D230418 30168014 
+  ECD081F2 B108FFAE 98D3504F F94AB579 1DADA7CC 301D0603 551D0E04 160414EE 
+  FF7493CD 7515793C 8F91BCC9 817A7180 25FF9730 0D06092A 864886F7 0D010105 
+  05000382 0101003E CD6A97C6 FF0B2BF8 64BB5FA1 D87A149C 8F91A90D 9AC79BB9 
+  A9F75C29 ED93BABC AE06B02B 0B799EF5 6BC23123 8611800B 75FDDD0F D6E4E194 
+  A19EC8B2 861857BB EE460F97 05836003 014ED830 FDCE5AE4 5DDA5B37 669147FC 
+  2E54FBDC 4B82E926 105D0C00 12204202 3D00801F C2ABE970 75C61A65 2ECFEF61 
+  7D61026D 9B27DAD9 D050CB5E C261495A B771B7E1 F7543E7E E74E38E4 328AA5B4 
+  A7FBF80D D53033C9 5720413C D6986B47 509ACC25 465C9B05 E7A2E774 6946F46B 
+  9F988D78 1475E770 5F09BA98 784818C6 022546C2 1E2B8565 983E017C 340A04A6 
+  750DCDED 70C5C94D 5D77BE4F D694EF01 6C171CA1 BF08B9BB 75CB8B00 6E63CF5F 
+  8F9A1D28 B5DF15
+  	quit
+ certificate ca 01
+  308202F8 308201E0 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  0D310B30 09060355 04031302 4341301E 170D3230 30383032 32313538 30315A17 
+  0D323330 38303232 31353830 315A300D 310B3009 06035504 03130243 41308201 
+  22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201 01009D3F 
+  7A439F0E 4B52BE75 C571750B 7095D19C F317C6DF 120AF2CC B8DE848B 1524E7BA 
+  2ED53539 FAA415EA 78101CA3 7723B526 B51954C0 67B056F2 999FDF0E 1277F7F3 
+  0F0F91FA 436F5597 FCB7B8E3 3E6CEB38 159F91EE 7B3B563A 68C48A56 052BE7D8 
+  051CC547 E55E07BF 45516B9B 74AE308E 0907EE6D DF6AC91B 08B45325 82C631BD 
+  90E18A82 D25CC540 EA1D8383 10011FCB 80CF2DF5 911CC1CE FCB5143F 9AA6B4D6 
+  0A40E618 7CE9FD21 14B56462 0D0425B1 0B5C1A77 0A93DF98 3EC4260C 6CE7A536 
+  98887AF8 24620102 2F12F384 B056E0AF 7E300665 ACC3E2D2 88F42006 56E3C1E1 
+  FB418605 CE37A839 6B94EA20 C7B0C4B9 C8D9B0EF A4E27965 40751BC7 AAA90203 
+  010001A3 63306130 0F060355 1D130101 FF040530 030101FF 300E0603 551D0F01 
+  01FF0404 03020186 301F0603 551D2304 18301680 14ECD081 F2B108FF AE98D350 
+  4FF94AB5 791DADA7 CC301D06 03551D0E 04160414 ECD081F2 B108FFAE 98D3504F 
+  F94AB579 1DADA7CC 300D0609 2A864886 F70D0101 04050003 82010100 812BD600 
+  1C971CBC EE83DA7D AD7F4AF8 69E850E0 0235A1BC DB951488 75AC8DE8 3E9EA40F 
+  2367287E 8532C1A4 85FE5881 1469A422 206887A0 E83AE4B0 A7029040 A44E176C 
+  4716ED5D 0B77B3EE 6017BCDD 7E2464E7 BEC93887 680EB935 93559F0E 023485E6 
+  02A17B9A CCB49C2A 9119656A 82E2063C 06EE070D 739AA5CF 6051386A 4B765F37 
+  7CF0781A 3677EC64 BD7C9636 4567B0FD C90EC2C8 7D0C6908 72AEF354 10C43C34 
+  42A03A56 88AEFC6C D113DC3A ECBC1B19 2EFC74F2 8AEA1DAD 60E90D58 B2BDBACB 
+  4054243F B5EF5FD3 F9872DD4 8A09FF48 99964868 DBDEA948 C91B4959 EDAC2EF9 
+  6DC068B1 640C1603 02AE692F 0D221A13 0A6CDBA3 E3B4C8A8 76DAAB30
+  	quit
+!
+redundancy
+!
+!
+track 1 ip sla 1 reachability
+!
+! 
+!
+!
+!
+!
+crypto isakmp policy 10
+!
+!
+crypto ipsec transform-set SET esp-aes esp-sha-hmac 
+ mode tunnel
+!         
+crypto ipsec profile VTI_prof
+ set transform-set SET 
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.3.1.129 255.255.255.255
+ ipv6 address FE80::28 link-local
+ ipv6 address 2001:A:3::28/128
+!
+interface Tunnel0
+ description DMVPN_MSK_R14
+ ip address 10.1.255.130 255.255.255.192
+ no ip redirects
+ ip nhrp authentication otus
+ ip nhrp map 10.1.255.190 200.1.0.126
+ ip nhrp map multicast 200.1.0.126
+ ip nhrp network-id 1
+ ip nhrp holdtime 300
+ ip nhrp nhs 10.1.255.190
+ ip nhrp shortcut
+ ip nhrp redirect
+ ip ospf network broadcast
+ ip ospf priority 0
+ tunnel source Ethernet0/0
+ tunnel mode gre multipoint
+ tunnel protection ipsec profile VTI_prof
+!
+interface Tunnel10
+ description DMVPN_MSK_R15
+ ip address 10.1.255.194 255.255.255.192
+ no ip redirects
+ ip nhrp authentication otus
+ ip nhrp map 10.1.255.254 200.1.0.254
+ ip nhrp map multicast 200.1.0.254
+ ip nhrp network-id 10
+ ip nhrp holdtime 300
+ ip nhrp nhs 10.1.255.254
+ ip nhrp shortcut
+ ip nhrp redirect
+ ip ospf network broadcast
+ ip ospf priority 0
+ tunnel source Ethernet0/1
+ tunnel mode gre multipoint
+ tunnel protection ipsec profile VTI_prof
+!
+interface Ethernet0/0
+ ip address 100.30.0.33 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ipv6 address FE80::28 link-local
+ ipv6 address 2001:B:3:2601::2800/64
+!
+interface Ethernet0/1
+ ip address 100.30.0.30 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ipv6 address FE80::28 link-local
+ ipv6 address 2001:B:3:2503::2801/64
+!
+interface Ethernet0/2
+ no ip address
+ ip nat inside
+ ip virtual-reassembly in
+!         
+interface Ethernet0/2.30
+ description VPC30
+ encapsulation dot1Q 30
+ ip address 10.3.0.62 255.255.255.192
+ ip policy route-map WAN1
+ ipv6 address FE80::28 link-local
+ ipv6 address 2001:A:3:FF30::28/64
+ ipv6 policy route-map WAN1_IP6
+!
+interface Ethernet0/2.31
+ description VPC31
+ encapsulation dot1Q 31
+ ip address 10.3.0.126 255.255.255.192
+ ipv6 address FE80::28 link-local
+ ipv6 address 2001:A:3:FF31::28/64
+!
+interface Ethernet0/2.99
+ description Management
+ encapsulation dot1Q 99
+ ip address 10.3.1.161 255.255.255.224
+ ipv6 address FE80::28 link-local
+ ipv6 address 2001:A:3:FF99::28/64
+!         
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ network 10.1.255.128 0.0.0.63 area 0
+ network 10.1.255.192 0.0.0.63 area 0
+ network 10.3.1.129 0.0.0.0 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip nat inside source list 10 interface Ethernet0/0 overload
+ip nat inside source list 20 interface Ethernet0/1 overload
+ip route 0.0.0.0 0.0.0.0 100.30.0.29 50
+ip route 0.0.0.0 0.0.0.0 100.30.0.34 100
+!
+ip access-list standard WAN1
+ permit 10.3.0.0 0.0.0.63
+ deny   any
+!
+ip sla 1
+ icmp-jitter 100.30.0.34 source-ip 100.30.0.33 num-packets 5
+ frequency 10
+ip sla schedule 1 life forever start-time now
+ipv6 route ::/0 2001:B:3:2503::1 50
+ipv6 route ::/0 2001:B:3:2601::1 100
+!         
+route-map WAN1_IP6 permit 10
+ match ipv6 address WAN1_IP6
+ set ipv6 next-hop 2001:B:3:2601::1 2001:B:3:2503::1
+!
+route-map WAN1 permit 10
+ match ip address WAN1
+ set ip next-hop verify-availability 100.30.0.34 10 track 1
+ set ip next-hop 100.30.0.29
+!
+!
+access-list 10 permit 10.3.0.0 0.0.0.63
+access-list 20 permit 10.3.0.64 0.0.0.63
+!
+ipv6 access-list WAN1_IP6
+ permit ipv6 2001:A:3:FF30::/64 any
+ deny ipv6 any any
+!
+control-plane
+!
+!
+!
+!
+!         
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password cisco
+ login
+ transport input none
+!
+!
+end
