@@ -1,0 +1,281 @@
+R18(config)#do sh run
+Building configuration...
+
+Current configuration : 7874 bytes
+!
+! Last configuration change at 01:43:28 MSK Fri Jul 24 2020
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R18
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$E838$E1mu.O9cE2HaipRV5OhVM/
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!         
+no ip domain lookup
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+crypto pki trustpoint VPN
+ enrollment url http://10.1.254.20:80
+ subject-name CN=R18,OU=VPN,O=Otus,C=RU
+ revocation-check none
+ rsakeypair VPN
+!
+!
+crypto pki certificate chain VPN
+ certificate 03
+  30820323 3082020B A0030201 02020103 300D0609 2A864886 F70D0101 05050030 
+  0D310B30 09060355 04031302 4341301E 170D3230 30383032 32323236 34335A17 
+  0D323130 38303232 32323634 335A304C 310B3009 06035504 06130252 55310D30 
+  0B060355 040A1304 4F747573 310C300A 06035504 0B130356 504E310C 300A0603 
+  55040313 03523138 31123010 06092A86 4886F70D 01090216 03523138 30820122 
+  300D0609 2A864886 F70D0101 01050003 82010F00 3082010A 02820101 00A86A36 
+  C8AFDB6E D0CE7CE5 3CF02D2E 884ABF43 8C757760 27557B66 91B083D5 66DA740E 
+  E910CF71 2C672D07 653EC64A CBAEF8C0 6358F80D 608E9711 15078518 B7217777 
+  A2D23353 ADAE34C4 62F36887 58691091 9C9AAFB4 ABB3993E 7A84074E 704C32BE 
+  CFB85BE3 B19271A8 B3EEB05A A74B532A B4244C95 8B2E451B 05A965A3 2A92F563 
+  9C2C3C09 EEFCF410 2DE26D1F 34669066 1D324384 D39D4E3F FCF057D6 D62A8758 
+  3FFE719D 883C44B9 B003203E B6771548 76FB6B89 FF11DFCF 3057418F 7474A4DD 
+  CD736309 F9309869 E7ECD824 ECE68F73 37013D9E B4622188 6438F8CE A6A46DAA 
+  3E0B7AC9 D08C46B4 94C6D42D D53F5899 CF1F20EC EB3BBAC6 D7D38CFC DB020301 
+  0001A34F 304D300B 0603551D 0F040403 0205A030 1F060355 1D230418 30168014 
+  ECD081F2 B108FFAE 98D3504F F94AB579 1DADA7CC 301D0603 551D0E04 1604146B 
+  DDCB01A6 E95C15F7 3EE6F2B5 B6744FDF 161A7E30 0D06092A 864886F7 0D010105 
+  05000382 0101006B 4B48A546 E6345214 2948641A 6A133470 3107762F EC88E38B 
+  F771C2E1 07359DEC 34B93B91 BD7A1C51 C037FFE1 CE88C52D 7BFABE1A FE1D4C54 
+  EA10027C DAC9A214 FAF8CE8E 10CDA919 E98A4D05 94607543 F47410F8 ED333CAC 
+  A6197DA7 A3D4A223 1E1566DD 190BD714 4A1F1CF1 97A65A9E 36771B50 47DDF222 
+  219A2409 34C7A1F4 613973F0 292A5744 DCA4AC68 8616C9E5 F7259149 A8329376 
+  3083D5A6 7278EC10 B60138F3 9B412EA4 6B42772E E3E234EF A53C292A 2A28CA80 
+  68283418 3B181287 F51894AF FB79D024 7B277557 77535878 D1EA0552 8535E8CD 
+  6C1F277B 790CEA28 B354D37C 724B6637 E71658CC F35AE3AA 04F00CFF 9896E76E 
+  B769CA7C B8D5AD
+  	quit
+ certificate ca 01
+  308202F8 308201E0 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  0D310B30 09060355 04031302 4341301E 170D3230 30383032 32313538 30315A17 
+  0D323330 38303232 31353830 315A300D 310B3009 06035504 03130243 41308201 
+  22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201 01009D3F 
+  7A439F0E 4B52BE75 C571750B 7095D19C F317C6DF 120AF2CC B8DE848B 1524E7BA 
+  2ED53539 FAA415EA 78101CA3 7723B526 B51954C0 67B056F2 999FDF0E 1277F7F3 
+  0F0F91FA 436F5597 FCB7B8E3 3E6CEB38 159F91EE 7B3B563A 68C48A56 052BE7D8 
+  051CC547 E55E07BF 45516B9B 74AE308E 0907EE6D DF6AC91B 08B45325 82C631BD 
+  90E18A82 D25CC540 EA1D8383 10011FCB 80CF2DF5 911CC1CE FCB5143F 9AA6B4D6 
+  0A40E618 7CE9FD21 14B56462 0D0425B1 0B5C1A77 0A93DF98 3EC4260C 6CE7A536 
+  98887AF8 24620102 2F12F384 B056E0AF 7E300665 ACC3E2D2 88F42006 56E3C1E1 
+  FB418605 CE37A839 6B94EA20 C7B0C4B9 C8D9B0EF A4E27965 40751BC7 AAA90203 
+  010001A3 63306130 0F060355 1D130101 FF040530 030101FF 300E0603 551D0F01 
+  01FF0404 03020186 301F0603 551D2304 18301680 14ECD081 F2B108FF AE98D350 
+  4FF94AB5 791DADA7 CC301D06 03551D0E 04160414 ECD081F2 B108FFAE 98D3504F 
+  F94AB579 1DADA7CC 300D0609 2A864886 F70D0101 04050003 82010100 812BD600 
+  1C971CBC EE83DA7D AD7F4AF8 69E850E0 0235A1BC DB951488 75AC8DE8 3E9EA40F 
+  2367287E 8532C1A4 85FE5881 1469A422 206887A0 E83AE4B0 A7029040 A44E176C 
+  4716ED5D 0B77B3EE 6017BCDD 7E2464E7 BEC93887 680EB935 93559F0E 023485E6 
+  02A17B9A CCB49C2A 9119656A 82E2063C 06EE070D 739AA5CF 6051386A 4B765F37 
+  7CF0781A 3677EC64 BD7C9636 4567B0FD C90EC2C8 7D0C6908 72AEF354 10C43C34 
+  42A03A56 88AEFC6C D113DC3A ECBC1B19 2EFC74F2 8AEA1DAD 60E90D58 B2BDBACB 
+  4054243F B5EF5FD3 F9872DD4 8A09FF48 99964868 DBDEA948 C91B4959 EDAC2EF9 
+  6DC068B1 640C1603 02AE692F 0D221A13 0A6CDBA3 E3B4C8A8 76DAAB30
+  	quit
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+crypto isakmp policy 10
+!
+!
+crypto ipsec transform-set SET esp-aes esp-sha-hmac 
+ mode tunnel
+!         
+crypto ipsec profile VTI_prof
+ set transform-set SET 
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.2.254.18 255.255.255.255
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:A:2::18/128
+!
+interface Loopback1
+ ip address 200.2.0.2 255.255.255.0 secondary
+ ip address 200.2.0.3 255.255.255.0 secondary
+ ip address 200.2.0.4 255.255.255.0 secondary
+ ip address 200.2.0.5 255.255.255.0 secondary
+ ip address 200.2.0.1 255.255.255.0
+!
+interface Tunnel1
+ description TUNNEL_MSK_R14
+ ip address 10.1.255.30 255.255.255.252
+ ip mtu 1474
+ ip tcp adjust-mss 1456
+ tunnel source 200.2.0.1
+ tunnel destination 200.1.0.126
+ tunnel protection ipsec profile VTI_prof
+!
+interface Tunnel2
+ description TUNNEL_MSK_R15
+ ip address 10.1.255.34 255.255.255.252
+ ip mtu 1474
+ ip tcp adjust-mss 1456
+ tunnel source 200.2.0.1
+ tunnel destination 200.1.0.254
+ tunnel protection ipsec profile VTI_prof
+!
+interface Ethernet0/0
+ ip address 10.2.255.9 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:A:2:1800::1/64
+!         
+interface Ethernet0/1
+ ip address 10.2.255.5 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:A:2:1801::1/64
+!
+interface Ethernet0/2
+ ip address 100.30.0.18 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:B:3:2403::1802/64
+!
+interface Ethernet0/3
+ ip address 100.30.0.38 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ipv6 address FE80::18 link-local
+ ipv6 address 2001:B:3:2603::1803/64
+!
+!
+router eigrp 1
+ network 10.2.254.18 0.0.0.0
+ network 10.2.255.4 0.0.0.3
+ network 10.2.255.8 0.0.0.3
+ redistribute ospf 1
+!
+router ospf 1
+ redistribute eigrp 1 subnets
+ passive-interface Ethernet0/2
+ passive-interface Ethernet0/3
+ network 10.1.255.28 0.0.0.3 area 0
+ network 10.1.255.32 0.0.0.3 area 0
+!
+router bgp 2042
+ bgp log-neighbor-changes
+ network 100.30.0.18 mask 255.255.255.255
+ network 100.30.0.38 mask 255.255.255.255
+ network 200.2.0.0
+ neighbor 10.2.254.16 remote-as 2042
+ neighbor 10.2.254.16 update-source Loopback0
+ neighbor 10.2.254.16 next-hop-self
+ neighbor 10.2.254.17 remote-as 2042
+ neighbor 10.2.254.17 update-source Loopback0
+ neighbor 10.2.254.17 next-hop-self
+ neighbor 10.2.254.32 remote-as 2042
+ neighbor 10.2.254.32 update-source Loopback0
+ neighbor 10.2.254.32 next-hop-self
+ neighbor 100.30.0.17 remote-as 520
+ neighbor 100.30.0.17 prefix-list SPB_NTWRK out
+ neighbor 100.30.0.37 remote-as 520
+ neighbor 100.30.0.37 prefix-list SPB_NTWRK out
+ maximum-paths 2
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip nat pool NAT-POOL 200.2.0.1 200.2.0.5 netmask 255.255.255.0
+ip nat inside source list 10 pool NAT-POOL overload
+!
+!
+ip prefix-list SPB_NTWRK seq 5 permit 200.2.0.0/24
+ipv6 route 2001:A:2::/48 2001:A:2:1800::1601
+ipv6 route 2001:A:2::/48 2001:A:2:1801::1701
+!
+!         
+access-list 10 permit 10.2.0.0 0.0.255.255
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 05080F1C2243
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 02050D480809
+ login
+ transport input none
+!         
+!
+end
