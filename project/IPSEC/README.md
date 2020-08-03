@@ -73,7 +73,7 @@ set transform-set SET
 crypto pki server CA grant all
 ```
 
-После того, как все маршрутизаторы получили сертификаты, выполняем привязку интерфейсов:
+После того, как все маршрутизаторы получили сертификаты, выполняем привязку интерфейсов.
 
 Москва, AS 1001:
 
@@ -101,3 +101,77 @@ tunnel protection ipsec profile VTI_prof
 ```
 
 ### 2. Настроим DMVPN поверх IPSec между Москва и Чокурдах, Лабытнанги
+
+Выполняем следующие настройки на маршрутизаторах:
+
+Лабытнанги (R27):
+
+```
+crypto key generate rsa label VPN modulus 2048
+crypto pki trustpoint VPN
+enrollment url http://10.1.254.20
+subject-name CN=R27,OU=VPN,O=Otus,C=RU
+rsakeypair VPN
+revocation-check none
+crypto pki authenticate VPN
+crypto pki enroll VPN
+
+crypto isakmp policy 10
+authentication rsa-sig
+crypto ipsec transform-set SET esp-aes esp-sha-hmac
+crypto ipsec profile VTI_prof
+set transform-set SET
+```
+
+Чокурдах (R28):
+```
+crypto key generate rsa label VPN modulus 2048
+crypto pki trustpoint VPN
+enrollment url http://10.1.254.20
+subject-name CN=R28,OU=VPN,O=Otus,C=RU
+rsakeypair VPN
+revocation-check none
+crypto pki authenticate VPN
+crypto pki enroll VPN
+
+crypto isakmp policy 10
+authentication rsa-sig
+crypto ipsec transform-set SET esp-aes esp-sha-hmac
+crypto ipsec profile VTI_prof
+set transform-set SET
+```
+
+Выдаем сертфикаты на маршрутизаторе R20:
+```
+crypto pki server CA grant all
+```
+
+После того, как все маршрутизаторы получили сертификаты, выполняем привязку интерфейсов.
+
+Москва, AS 1001:
+
+R14:
+```
+interface Tunnel0
+tunnel protection ipsec profile VTI_prof
+```
+
+R15:
+```
+interface Tunnel10
+tunnel protection ipsec profile VTI_prof
+```
+
+Лабытнанги (R27):
+```
+interface Tunnel0
+tunnel protection ipsec profile VTI_prof
+```
+
+Чокурдах (R28):
+```
+interface Tunnel0
+tunnel protection ipsec profile VTI_prof
+interface Tunnel10
+tunnel protection ipsec profile VTI_prof
+```
