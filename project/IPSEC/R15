@@ -1,0 +1,316 @@
+R15(config)#do sh run 
+Building configuration...
+
+Current configuration : 8658 bytes
+!
+! No configuration change since last restart
+! NVRAM config last updated at 22:02:54 MSK Mon Aug 3 2020
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R15
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$bLKS$ZFQmEgb2pxO3tuX7uw.Bk.
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!         
+!
+no ip domain lookup
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+crypto pki trustpoint VPN
+ enrollment url http://10.1.254.20:80
+ subject-name CN=R15,OU=VPN,O=Otus,C=RU
+ revocation-check none
+ rsakeypair VPN
+!
+!         
+crypto pki certificate chain VPN
+ certificate 04
+  30820323 3082020B A0030201 02020104 300D0609 2A864886 F70D0101 05050030 
+  0D310B30 09060355 04031302 4341301E 170D3230 30383033 31373231 31375A17 
+  0D323130 38303331 37323131 375A304C 310B3009 06035504 06130252 55310D30 
+  0B060355 040A1304 4F747573 310C300A 06035504 0B130356 504E310C 300A0603 
+  55040313 03523135 31123010 06092A86 4886F70D 01090216 03523135 30820122 
+  300D0609 2A864886 F70D0101 01050003 82010F00 3082010A 02820101 00ABDCFC 
+  2036DCDD E297A799 178CD44A C7B1493D 46A71C64 EDFD4239 1D6C96EE 117874F6 
+  5D8CAEAF 2D94FF90 DD987657 DEE68EFC 2E6EA4AE 4621896F CD67AA26 237A6FCB 
+  BD10BD8C 6E431EC4 D4CC4796 E35852F0 08AD8994 A7509AC9 4DAF99B1 F113008B 
+  A54E9B18 F4673682 78F0F3A4 6EBE6B21 5AE397B3 3F108241 7B966A0A 3823DB31 
+  B541EE47 4BAD15BA 3A6AFA03 1AF67E9E A79C9982 B7E99CBC 2F99888C 03772D54 
+  25FACBB2 D7B0FA9F 25FC3F24 4955FD71 174ADE23 2B36B464 63B1FAFB 633B75ED 
+  760AC800 3F114E12 8FF86C5D 83B37808 CE73ADA5 ACA76982 A143C38D 12ADB289 
+  CC40E5BF 7483EECB F53D8E53 72AE581B 11687027 ED8A9610 5BB44D80 5D020301 
+  0001A34F 304D300B 0603551D 0F040403 0205A030 1F060355 1D230418 30168014 
+  ECD081F2 B108FFAE 98D3504F F94AB579 1DADA7CC 301D0603 551D0E04 16041448 
+  722CBBB2 7324C34A 6B2510C8 AD64E637 E11C3530 0D06092A 864886F7 0D010105 
+  05000382 01010071 0C69242A 21BD347B 029D1BD9 DE4F12C7 A7D87813 F0C147B3 
+  BB000ECB F98D5E1F 3D7380FA 3D579B9E 6D506CC0 551A431A F0450ACF 7FA08452 
+  912CC72F 2807A4FA FA9DA180 9DCAF6B1 FA5D839D 9211322C B5A927A0 A80E7B3C 
+  8E489A30 EE16A5EA 851C6284 9AB9F67F C34035DE 87B2E731 D0EEED11 78DA9B03 
+  F144FB25 C2D6393F F98EE771 00A4BA9B 57559361 2A978A77 819BAB0A 02409AB3 
+  215FD844 6B3BC610 5FF267AE C4546F70 793937FB 2DA11133 47042C94 C7FFE351 
+  584DD4FA 6CAD6753 B81965F8 55E55711 BB500EA2 DAF2E9A8 CE16082E 92769A2C 
+  7B906058 BD628294 1CCBBBF9 255DDD10 14922974 589D8150 4AE59416 90781A54 
+  33D71532 697DE1
+  	quit
+ certificate ca 01
+  308202F8 308201E0 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  0D310B30 09060355 04031302 4341301E 170D3230 30383032 32313538 30315A17 
+  0D323330 38303232 31353830 315A300D 310B3009 06035504 03130243 41308201 
+  22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201 01009D3F 
+  7A439F0E 4B52BE75 C571750B 7095D19C F317C6DF 120AF2CC B8DE848B 1524E7BA 
+  2ED53539 FAA415EA 78101CA3 7723B526 B51954C0 67B056F2 999FDF0E 1277F7F3 
+  0F0F91FA 436F5597 FCB7B8E3 3E6CEB38 159F91EE 7B3B563A 68C48A56 052BE7D8 
+  051CC547 E55E07BF 45516B9B 74AE308E 0907EE6D DF6AC91B 08B45325 82C631BD 
+  90E18A82 D25CC540 EA1D8383 10011FCB 80CF2DF5 911CC1CE FCB5143F 9AA6B4D6 
+  0A40E618 7CE9FD21 14B56462 0D0425B1 0B5C1A77 0A93DF98 3EC4260C 6CE7A536 
+  98887AF8 24620102 2F12F384 B056E0AF 7E300665 ACC3E2D2 88F42006 56E3C1E1 
+  FB418605 CE37A839 6B94EA20 C7B0C4B9 C8D9B0EF A4E27965 40751BC7 AAA90203 
+  010001A3 63306130 0F060355 1D130101 FF040530 030101FF 300E0603 551D0F01 
+  01FF0404 03020186 301F0603 551D2304 18301680 14ECD081 F2B108FF AE98D350 
+  4FF94AB5 791DADA7 CC301D06 03551D0E 04160414 ECD081F2 B108FFAE 98D3504F 
+  F94AB579 1DADA7CC 300D0609 2A864886 F70D0101 04050003 82010100 812BD600 
+  1C971CBC EE83DA7D AD7F4AF8 69E850E0 0235A1BC DB951488 75AC8DE8 3E9EA40F 
+  2367287E 8532C1A4 85FE5881 1469A422 206887A0 E83AE4B0 A7029040 A44E176C 
+  4716ED5D 0B77B3EE 6017BCDD 7E2464E7 BEC93887 680EB935 93559F0E 023485E6 
+  02A17B9A CCB49C2A 9119656A 82E2063C 06EE070D 739AA5CF 6051386A 4B765F37 
+  7CF0781A 3677EC64 BD7C9636 4567B0FD C90EC2C8 7D0C6908 72AEF354 10C43C34 
+  42A03A56 88AEFC6C D113DC3A ECBC1B19 2EFC74F2 8AEA1DAD 60E90D58 B2BDBACB 
+  4054243F B5EF5FD3 F9872DD4 8A09FF48 99964868 DBDEA948 C91B4959 EDAC2EF9 
+  6DC068B1 640C1603 02AE692F 0D221A13 0A6CDBA3 E3B4C8A8 76DAAB30
+  	quit
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+crypto isakmp policy 10
+!
+!
+crypto ipsec transform-set SET esp-aes esp-sha-hmac 
+ mode tunnel
+!
+crypto ipsec profile VTI_prof
+ set transform-set SET 
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.254.15 255.255.255.255
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1::15/128
+ ipv6 ospf 1 area 0
+!
+interface Loopback1
+ ip address 200.1.0.220 255.255.255.128 secondary
+ ip address 200.1.0.254 255.255.255.128
+!
+interface Tunnel2
+ description TUNNEL_SPB
+ ip address 10.1.255.33 255.255.255.252
+ ip mtu 1474
+ ip tcp adjust-mss 1456
+ tunnel source 200.1.0.254
+ tunnel destination 200.2.0.1
+ tunnel protection ipsec profile VTI_prof
+!
+interface Tunnel10
+ description DMVPN_REZ
+ ip address 10.1.255.254 255.255.255.192
+ no ip redirects
+ ip nhrp authentication otus
+ ip nhrp map multicast dynamic
+ ip nhrp network-id 10
+ ip nhrp holdtime 300
+ ip nhrp redirect
+ ip ospf network broadcast
+ tunnel source 200.1.0.254
+ tunnel mode gre multipoint
+ tunnel protection ipsec profile VTI_prof
+!
+interface Ethernet0/0
+ ip address 10.1.255.13 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1500::1/64
+ ipv6 ospf 1 area 10
+!
+interface Ethernet0/1
+ ip address 10.1.255.17 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1501::1/64
+ ipv6 ospf 1 area 10
+!
+interface Ethernet0/2
+ ip address 100.20.0.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:B:2:2100::1502/64
+!
+interface Ethernet0/3
+ ip address 10.1.255.21 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1503::1/64
+ ipv6 ospf 1 area 102
+!
+interface Ethernet1/0
+ ip address 10.1.255.26 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address FE80::15 link-local
+ ipv6 address 2001:A:1:1410::1510/64
+ ipv6 ospf 1 area 0
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ area 10 stub
+ area 101 stub
+ area 102 filter-list prefix FROM_R19 in
+ passive-interface Ethernet0/2
+ network 10.1.254.15 0.0.0.0 area 0
+ network 10.1.255.12 0.0.0.3 area 10
+ network 10.1.255.16 0.0.0.3 area 10
+ network 10.1.255.20 0.0.0.3 area 102
+ network 10.1.255.24 0.0.0.3 area 0
+ network 10.1.255.32 0.0.0.3 area 0
+ network 10.1.255.192 0.0.0.63 area 0
+!
+router bgp 1001
+ bgp log-neighbor-changes
+ network 100.20.0.2 mask 255.255.255.255
+ network 200.1.0.128 mask 255.255.255.128
+ neighbor 10.1.254.14 remote-as 1001
+ neighbor 10.1.254.14 update-source Loopback0
+ neighbor 10.1.254.14 next-hop-self
+ neighbor 100.20.0.1 remote-as 301
+ neighbor 100.20.0.1 route-map KITORN in
+ neighbor 100.20.0.1 filter-list 1 out
+!
+ip forward-protocol nd
+!
+ip as-path access-list 1 permit ^$
+ip as-path access-list 1 deny .*
+!
+no ip http server
+no ip http secure-server
+ip nat inside source list 10 interface Loopback1 overload
+ip nat inside source static 10.1.254.20 200.1.0.220
+ip nat inside source static tcp 10.1.254.19 22 200.1.0.254 222 extendable
+!
+!
+ip prefix-list FROM_R19 seq 10 deny 10.1.254.19/32
+ip prefix-list FROM_R19 seq 20 deny 10.1.255.8/30 le 32
+ip prefix-list FROM_R19 seq 30 permit 0.0.0.0/0 le 32
+ipv6 route ::/0 2001:B:2:2100::1
+ipv6 router ospf 1
+ area 10 stub
+ area 102 filter-list prefix FROM_R19_V6 in
+ passive-interface Ethernet0/2
+!
+!
+!
+ipv6 prefix-list FROM_R19_V6 seq 10 deny 2001:A:1::19/128
+ipv6 prefix-list FROM_R19_V6 seq 20 deny 2001:A:1:1403::/64 le 128
+ipv6 prefix-list FROM_R19_V6 seq 30 permit ::/0 le 128
+route-map KITORN permit 10
+ set local-preference 200
+!
+!
+access-list 10 permit 10.1.0.0 0.0.255.255
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 0822455D0A16
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 01100F175804
+ login
+ transport input none
+!
+ntp server 10.1.254.12
+ntp server 10.1.254.13
+!
+end
