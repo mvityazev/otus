@@ -1,0 +1,183 @@
+R20#sh run
+Building configuration...
+
+Current configuration : 3688 bytes
+!
+! Last configuration change at 20:21:06 MSK Mon Aug 3 2020
+! NVRAM config last updated at 22:04:10 MSK Mon Aug 3 2020
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R20
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$uvWb$NOHyEuYufsg0HjfAe7tXh1
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!         
+!
+no ip domain lookup
+ip domain name otus.ru
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+crypto pki server CA
+ no database archive
+!
+crypto pki trustpoint CA
+ revocation-check crl
+ rsakeypair CA
+!
+!
+crypto pki certificate chain CA
+ certificate ca 01
+  308202F8 308201E0 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  0D310B30 09060355 04031302 4341301E 170D3230 30383032 32313538 30315A17 
+  0D323330 38303232 31353830 315A300D 310B3009 06035504 03130243 41308201 
+  22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201 01009D3F 
+  7A439F0E 4B52BE75 C571750B 7095D19C F317C6DF 120AF2CC B8DE848B 1524E7BA 
+  2ED53539 FAA415EA 78101CA3 7723B526 B51954C0 67B056F2 999FDF0E 1277F7F3 
+  0F0F91FA 436F5597 FCB7B8E3 3E6CEB38 159F91EE 7B3B563A 68C48A56 052BE7D8 
+  051CC547 E55E07BF 45516B9B 74AE308E 0907EE6D DF6AC91B 08B45325 82C631BD 
+  90E18A82 D25CC540 EA1D8383 10011FCB 80CF2DF5 911CC1CE FCB5143F 9AA6B4D6 
+  0A40E618 7CE9FD21 14B56462 0D0425B1 0B5C1A77 0A93DF98 3EC4260C 6CE7A536 
+  98887AF8 24620102 2F12F384 B056E0AF 7E300665 ACC3E2D2 88F42006 56E3C1E1 
+  FB418605 CE37A839 6B94EA20 C7B0C4B9 C8D9B0EF A4E27965 40751BC7 AAA90203 
+  010001A3 63306130 0F060355 1D130101 FF040530 030101FF 300E0603 551D0F01 
+  01FF0404 03020186 301F0603 551D2304 18301680 14ECD081 F2B108FF AE98D350 
+  4FF94AB5 791DADA7 CC301D06 03551D0E 04160414 ECD081F2 B108FFAE 98D3504F 
+  F94AB579 1DADA7CC 300D0609 2A864886 F70D0101 04050003 82010100 812BD600 
+  1C971CBC EE83DA7D AD7F4AF8 69E850E0 0235A1BC DB951488 75AC8DE8 3E9EA40F 
+  2367287E 8532C1A4 85FE5881 1469A422 206887A0 E83AE4B0 A7029040 A44E176C 
+  4716ED5D 0B77B3EE 6017BCDD 7E2464E7 BEC93887 680EB935 93559F0E 023485E6 
+  02A17B9A CCB49C2A 9119656A 82E2063C 06EE070D 739AA5CF 6051386A 4B765F37 
+  7CF0781A 3677EC64 BD7C9636 4567B0FD C90EC2C8 7D0C6908 72AEF354 10C43C34 
+  42A03A56 88AEFC6C D113DC3A ECBC1B19 2EFC74F2 8AEA1DAD 60E90D58 B2BDBACB 
+  4054243F B5EF5FD3 F9872DD4 8A09FF48 99964868 DBDEA948 C91B4959 EDAC2EF9 
+  6DC068B1 640C1603 02AE692F 0D221A13 0A6CDBA3 E3B4C8A8 76DAAB30
+  	quit
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+interface Loopback0
+ ip address 10.1.254.20 255.255.255.255
+ ipv6 address FE80::20 link-local
+ ipv6 address 2001:A:1::20/128
+ ipv6 ospf 1 area 102
+!
+interface Ethernet0/0
+ ip address 10.1.255.22 255.255.255.252
+ ipv6 address FE80::20 link-local
+ ipv6 address 2001:A:1:1503::2000/64
+ ipv6 ospf 1 area 102
+!
+interface Ethernet0/1
+ no ip address
+ shutdown
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown 
+!
+router ospf 1
+ network 10.1.254.20 0.0.0.0 area 102
+ network 10.1.255.20 0.0.0.3 area 102
+!
+ip forward-protocol nd
+!
+!
+ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.1.254.15
+!
+ipv6 router ospf 1
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!         
+!
+!
+banner motd ^C Authorized Access Only! ^C
+!
+line con 0
+ exec-timeout 0 0
+ password 7 02050D480809
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password 7 104D000A0618
+ login
+ transport input none
+!
+ntp server 10.1.254.12
+ntp server 10.1.254.13
+!
+end
